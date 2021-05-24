@@ -1,0 +1,12 @@
+html,
+body {
+    height: 100%;
+}
+
+body {
+    background-image: url(../img/background.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    backdrop-filter: blur(8px);
+}
