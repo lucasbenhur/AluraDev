@@ -9,6 +9,52 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+    <div id="bg-imagem"></div>
+    <div id="conteudo" class="conteudo container-fluid">        
+        <div class="row">
+            <nav class="navbar">
+                <div class="col-brand col-7 col-sm-3 col-md-3">
+                    <a href="#">
+                        <img src="img/Logo.png">
+                    </a>
+                </div>
+                <div class="col-buscar col-0 col-sm-8 col-md-6">
+                    <input type="search" class="txt-buscar form-control me-2" placeholder="Busque por algo">                    
+                </div>
+                <div class="col-user col-5 col-sm-1 col-md-3">
+                    <div class="div-user">
+                        <img class="rounded-circle" src="https://avatars.githubusercontent.com/u/46672988?v=4" height="32px" width="32px">
+                        Lucas Ben Hur
+                    </div>
+                    <button class="btn-buscar btn-transparent" data-bs-toggle="collapse" data-bs-target="#div-buscar-suspenso">
+                        <img src="img/SearchIcon.png">
+                    </button>
+                    <button class="btn-hamburguer btn-transparent" data-bs-toggle="collapse" data-bs-target="#div-menu-suspenso">
+                        <img src="img/HamburguerIcon.png">
+                    </button>
+                </div>
+            </nav>
+        </div>        
+        <div class="row">
+
+            
+
+
+        </div>
+
+        <div id="div-menu-suspenso" class="div-menu-suspenso collapse container">
+                
+        </div>
+
+        <div id="div-buscar-suspenso" class="collapse container">
+            <div style="display: flex;">
+                <input type="search" class="txt-buscar-suspenso form-control me-2" placeholder="Busque por algo">
+                <button class="btn-fechar btn-transparent" data-bs-toggle="collapse" data-bs-target="#div-buscar-suspenso">
+                    <img src="img/CloseIcon.png">
+                </button>
+            </div>
+        </div>
+    </div>
 </body>
 <script src="js/jQuery.min.js"></script>
 <script src="js/bootstrap.bundle.min.js"></script>

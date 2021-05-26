@@ -3,10 +3,126 @@ body {
     height: 100%;
 }
 
-body {
-    background-image: url(../img/background.png);
+#bg-imagem {
+    height: 100%;
+    background-image: url(../img/background.jpg);
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    backdrop-filter: blur(8px);
+    border-radius: 40px;    
+    filter: blur(8px);
+}
+
+#conteudo {
+    position: absolute;
+    left: 0;
+    top: 0;
+    padding: 32px 32px;
+    height: 100%;
+}
+
+.btn-transparent {
+    background-color: transparent;
+    border: none;
+}
+
+.txt-buscar {
+    width: 100%;
+    border-radius: 8px;
+    height: 56px;
+}
+
+.txt-buscar-suspenso {
+    width: 287px;
+    height: 55px;
+    border-radius: 8px;
+}
+
+.col-user {
+    text-align: right;
+    color: white;
+}
+
+.div-menu-suspenso {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.16);
+    width: 254px;
+    height: 912px;
+    right: 0%;
+    border-radius: 8px;
+}
+
+#div-buscar-suspenso {
+    position: absolute;
+    width: 320px;
+    bottom: 5%;
+    left: 50%;    
+    transform: translateX(-50%);
+}
+
+/*>=769px */
+@media (min-width: 769px) {
+    .btn-hamburguer {
+        display: none;
+    }
+}
+
+/*<=768px*/
+@media (max-width: 768px) {
+    .div-user {
+        display: none;
+    }
+
+    .col-buscar {
+        width: 66.66666666666667%;
+    }
+
+    .col-user {
+        width: 8.333333333333333%;
+    }
+}
+
+/*<=720px*/
+@media (max-width: 720px) {
+    .div-user {
+        display: none;
+    }
+
+    .col-brand {
+        width: 33.33333333333333%;
+    }
+
+    .col-buscar {
+        width: 58.33333333333333%;
+    }
+
+    .col-user {
+        width: 8.333333333333333%;
+    }
+}
+
+/*>=577px */
+@media (min-width: 576px) {
+    .btn-buscar {
+        display: none;
+    }
+}
+
+/*<=576px */
+@media (max-width: 575px) {
+    .txt-buscar {
+        display: none;
+    }
+
+    .div-menu-suspenso {
+        height: 571px;
+    }
+
+    .col-buscar {
+        width: 0%;
+    }
+
+    .col-user {
+        width: 41.66666666666667%;
+    }
 }
