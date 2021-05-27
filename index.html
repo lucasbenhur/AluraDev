@@ -9,8 +9,7 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <div id="bg-imagem"></div>
-    <div id="conteudo" class="conteudo container-fluid">        
+    <div id="conteudo" class="conteudo container-fluid">
         <div class="row">
             <nav class="navbar">
                 <div class="col-brand col-7 col-sm-3 col-md-3">
@@ -19,39 +18,56 @@
                     </a>
                 </div>
                 <div class="col-buscar col-0 col-sm-8 col-md-6">
-                    <input type="search" class="txt-buscar form-control me-2" placeholder="Busque por algo">                    
-                </div>
-                <div class="col-user col-5 col-sm-1 col-md-3">
-                    <div class="div-user">
-                        <img class="rounded-circle" src="https://avatars.githubusercontent.com/u/46672988?v=4" height="32px" width="32px">
-                        Lucas Ben Hur
+                    <div id="divBuscar" class="buscar collapse show">
+                        <input type="search" class="txt-buscar" placeholder="Busque por algo">
+                        <button class="btn-fechar btn-transparent" data-bs-toggle="collapse" data-bs-target="#divBuscar">
+                            <img src="img/CloseIcon.png">
+                        </button>
                     </div>
-                    <button class="btn-buscar btn-transparent" data-bs-toggle="collapse" data-bs-target="#div-buscar-suspenso">
+                </div>
+                <div class="col-botoes-navbar col-5 col-sm-1 col-md-3">
+                    <button class="btn-buscar btn-transparent" data-bs-toggle="collapse" data-bs-target="#divBuscar">
                         <img src="img/SearchIcon.png">
                     </button>
-                    <button class="btn-hamburguer btn-transparent" data-bs-toggle="collapse" data-bs-target="#div-menu-suspenso">
+                    <button class="btn-hamburguer btn-transparent" data-bs-toggle="collapse" data-bs-target="#menu">
                         <img src="img/HamburguerIcon.png">
                     </button>
                 </div>
             </nav>
-        </div>        
-        <div class="row">
-
-            
-
-
         </div>
+        <div class="row" style="margin-top: 40px;">
+            <div id="sidebar" class="sidebar col-sm-0 col-md-3 collapse show">
+                <div class="sidebar-item sidebar-title">
+                    MENU
+                </div>
+                <div class="sidebar-item">
+                    <a class="sidebar-link" href="#">
+                        <img src="img/Enabled-Code-Edit-Icon.png" style="margin-right: 16px;">
+                        Editor de código
+                    </a>
+                </div>
+                <div class="sidebar-item">
+                    <a class="sidebar-link" href="#">
+                        <img src="img/Disabled-Community-Icon.png" style="margin-right: 16px;">
+                        Comunidade
+                    </a>
+                </div>
+                <div class="user">
+                    <img class="rounded-circle" src="https://avatars.githubusercontent.com/u/46672988?v=4" height="32px" width="32px">
+                    Lucas Ben Hur
+                </div>
+            </div>
+            <div class="col-editor col-sm-12 col-md-6" style="padding: 0px 5px;">
+                <div class="code-editor">
+                    <img class="botoes-mac" src="img/mac_buttons.svg">
+                    <textarea class="textarea-code-editor" id="textarea-code-editor"></textarea>
+                </div>
+                <div>
+                    <button class="btn-highlight">Visualizar com o highlight</button>
+                </div>
+            </div>
+            <div class="col-formulario col-sm-12 col-md-3">
 
-        <div id="div-menu-suspenso" class="div-menu-suspenso collapse container">
-                
-        </div>
-
-        <div id="div-buscar-suspenso" class="collapse container">
-            <div style="display: flex;">
-                <input type="search" class="txt-buscar-suspenso form-control me-2" placeholder="Busque por algo">
-                <button class="btn-fechar btn-transparent" data-bs-toggle="collapse" data-bs-target="#div-buscar-suspenso">
-                    <img src="img/CloseIcon.png">
-                </button>
             </div>
         </div>
     </div>
