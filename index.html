@@ -57,7 +57,7 @@
                     Lucas Ben Hur
                 </div>
             </div>
-            <div class="col-editor col-sm-12 col-md-6" style="padding: 0px 5px;">
+            <div class="col-editor col-sm-12 col-md-6">
                 <div class="code-editor">
                     <img class="botoes-mac" src="img/mac_buttons.svg">
                     <textarea class="textarea-code-editor" id="textarea-code-editor"></textarea>
@@ -67,7 +67,31 @@
                 </div>
             </div>
             <div class="col-formulario col-sm-12 col-md-3">
-
+                <div class="form-title">
+                    SEU PROJETO
+                </div>
+                <div>
+                    <input type="text" class="txt-nome-projeto" placeholder="Nome do seu projeto">
+                </div>
+                <div>
+                    <textarea class="txta-descricao-projeto" placeholder="Descrição do seu projeto"></textarea>
+                </div>
+                <div class="form-title">
+                    PERSONALIZAÇÃO
+                </div>
+                <div class="row">
+                    <div class="col-linguagem">
+                        <select class="select-linguagem">
+                            <option value="javascript" selected>JavaScript</option>
+                            <option value="html" >HTML</option>
+                            <option value="css">CSS</option>
+                        </select>
+                    </div>
+                    <div class="col-cor">
+                        <input type="color" class="color-picker" value="#6BD1FF">
+                    </div>
+                </div>                    
+                <button class="btn-salvar" type="submit">Salvar projeto</button>
             </div>
         </div>
     </div>
