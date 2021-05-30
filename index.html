@@ -9,93 +9,121 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <div id="conteudo" class="conteudo container-fluid">
-        <div class="row">
-            <nav class="navbar">
-                <div class="col-brand col-7 col-sm-3 col-md-3">
-                    <a href="#">
-                        <img src="img/Logo.png">
-                    </a>
-                </div>
-                <div class="col-buscar col-0 col-sm-8 col-md-6">
-                    <div id="divBuscar" class="buscar collapse show">
-                        <input type="search" class="txt-buscar" placeholder="Busque por algo">
-                        <button class="btn-fechar btn-transparent" data-bs-toggle="collapse" data-bs-target="#divBuscar">
-                            <img src="img/CloseIcon.png">
-                        </button>
-                    </div>
-                </div>
-                <div class="col-botoes-navbar col-5 col-sm-1 col-md-3">
-                    <button class="btn-buscar btn-transparent" data-bs-toggle="collapse" data-bs-target="#divBuscar">
-                        <img src="img/SearchIcon.png">
-                    </button>
-                    <button class="btn-hamburguer btn-transparent" data-bs-toggle="collapse" data-bs-target="#menu">
-                        <img src="img/HamburguerIcon.png">
-                    </button>
-                </div>
-            </nav>
+    <nav class="navbar">
+        <div class="col-md-3 col-lg-3">
+            <a href="index.html">
+                <img src="img/Logo.png">
+            </a>
         </div>
-        <div class="row" style="margin-top: 40px;">
-            <div id="sidebar" class="sidebar col-sm-0 col-md-3 collapse show">
-                <div class="sidebar-item sidebar-title">
-                    MENU
-                </div>
-                <div class="sidebar-item">
-                    <a class="sidebar-link" href="#">
-                        <img src="img/Enabled-Code-Edit-Icon.png" style="margin-right: 16px;">
-                        Editor de código
+        <div class="col-md-8 col-lg-6">
+            <div id="div-buscar">
+                <input id="txt-buscar" type="text" class="input-texto" placeholder="Busque por algo">
+                <button id="btn-fechar-buscar" class="btn-icon">
+                    <img src="img/CloseIcon.png">
+                </button>
+            </div>
+        </div>
+        <div class="col-md-1 col-lg-3">
+            <div class="div-btn-nav">
+                <button id="btn-buscar" class="btn-icon">
+                    <img src="img/SearchIcon.png">
+                </button>
+                <button id="btn-hamburguer" class="btn-icon">
+                    <img src="img/HamburguerIcon.png">
+                </button>
+            </div>
+        </div>
+    </nav>
+    <div class="row" style="margin-left: 32px; margin-right: 32px; margin-bottom: 32px;">
+        <div id="col-sidebar" class="col-lg-3">
+            <ul class="nav nav-pills flex-column mb-auto">
+                <li class="nav-item font-sidebar-title">
+                    Menu
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <button class="btn-item-menu">
+                            <img src="img/icon_code.svg">
+                        </button>
+                        <div class="font-sidebar-item">
+                            Editor de código
+                        </div>
                     </a>
-                </div>
-                <div class="sidebar-item">
-                    <a class="sidebar-link" href="#">
-                        <img src="img/Disabled-Community-Icon.png" style="margin-right: 16px;">
-                        Comunidade
+                </li>
+                <li class="nav-item" style="margin-bottom: 0px;">
+                    <a class="nav-link" href="#">
+                        <button class="btn-item-menu">
+                            <img src="img/icon_users.svg">
+                        </button>
+                        <div class="font-sidebar-item">
+                            Comunidade
+                        </div>
                     </a>
+                </li>
+                <div id="div-hr-menu" style="margin-top: 24px; margin-bottom: 36px;">
+                    <hr class="hr-menu">
+                </div>                
+                <div id="div-usuario">
+                    <li class="nav-item" style="margin: 0px 0px">
+                        <a class="nav-link" href="#">
+                            <button class="btn-usuario">
+                                <img src="https://avatars.githubusercontent.com/u/46672988?v=4" class="rounded-circle" width="32px" height="32px">
+                            </button>
+                            <div class="font-sidebar-item" style="opacity: unset; margin-left: 8px;">
+                                Lucas Ben Hur
+                            </div>
+                        </a>
+                    </li>
                 </div>
-                <div class="user">
-                    <img class="rounded-circle" src="https://avatars.githubusercontent.com/u/46672988?v=4" height="32px" width="32px">
-                    Lucas Ben Hur
+            </ul>
+        </div>
+        <div id="col-code-editor" class="col-md-12 col-lg-6">
+            <div id="div-code-editor" class="bg-code-editor">
+                <div class="btn-mac">
+                    <img src="img/mac_buttons.svg">
                 </div>
+                <textarea id="txt-code-editor" class="code-editor"></textarea>
             </div>
-            <div class="col-editor col-sm-12 col-md-6">
-                <div class="code-editor">
-                    <img class="botoes-mac" src="img/mac_buttons.svg">
-                    <textarea class="textarea-code-editor" id="textarea-code-editor"></textarea>
-                </div>
-                <div>
-                    <button class="btn-highlight">Visualizar com o highlight</button>
-                </div>
+            <div style="margin-top: 32px;">
+                <button class="btn-outlined">
+                    Visualizar com o highlight
+                </button>
             </div>
-            <div class="col-formulario col-sm-12 col-md-3">
-                <div class="form-title">
-                    SEU PROJETO
+        </div>
+        <div id="col-formulario" class="col-md-12 col-lg-3">
+            <form onsubmit="salvar()">
+                <div class="form-item font-sidebar-title">
+                    Seu Projeto
                 </div>
-                <div>
-                    <input type="text" class="txt-nome-projeto" placeholder="Nome do seu projeto">
+                <div class="form-item">
+                    <input id="txt-nome-projeto" type="text" class="input-texto" placeholder="Nome do seu projeto">
                 </div>
-                <div>
-                    <textarea class="txta-descricao-projeto" placeholder="Descrição do seu projeto"></textarea>
+                <div class="form-item">
+                    <textarea id="txt-descricao-projeto" placeholder="Descrição do seu projeto" class="input-texto" style="height: 80px;"></textarea>
                 </div>
-                <div class="form-title">
-                    PERSONALIZAÇÃO
+                <div class="form-item font-sidebar-title" style="margin-top: 40px;">
+                    Personalização
                 </div>
-                <div class="row">
-                    <div class="col-linguagem">
-                        <select class="select-linguagem">
-                            <option value="javascript" selected>JavaScript</option>
-                            <option value="html" >HTML</option>
-                            <option value="css">CSS</option>
-                        </select>
-                    </div>
-                    <div class="col-cor">
-                        <input type="color" class="color-picker" value="#6BD1FF">
-                    </div>
-                </div>                    
-                <button class="btn-salvar" type="submit">Salvar projeto</button>
-            </div>
+                <div class="form-item">
+                    <select id="select-linguagem" class="input-select">
+                        <option class="option-select" value="0" selected>JavaScript</option>
+                        <option class="option-select" value="1">HTML</option>
+                        <option class="option-select" value="2">CSS</option>
+                    </select>
+                </div>
+                <div class="form-item">
+                    <input type="color" id="color" class="input-color" value="#6BD1FF">
+                </div>
+                <div style="margin-top: 32px;">
+                    <button type="submit" class="btn-filled">
+                        Salvar projeto
+                    </button>
+                </div>
+        </form>
         </div>
     </div>
 </body>
 <script src="js/jQuery.min.js"></script>
 <script src="js/bootstrap.bundle.min.js"></script>
+<script src="js/index.js"></script>
 </html>
