@@ -31,7 +31,7 @@ body {
     border-radius: 16px;
     width: 48px;
     height: 48px;
-    opacity: 0.48;
+    pointer-events: none;
 }
 
 .btn-usuario {
@@ -40,6 +40,8 @@ body {
     width: 32px;
     height: 32px;
     padding: 0px 0px;
+    margin-left: 12px;
+    pointer-events: none;
 }
 
 .input-texto {
@@ -67,6 +69,45 @@ body {
     padding: 0px 0px;
     display: flex;
     align-items: center;
+    opacity: 0.56;
+}
+
+.nav-link:hover {
+    opacity: 0.72;
+}
+
+.nav-link:hover .btn-item-menu {
+    background: rgba(80, 129, 251, 0.64);
+}
+
+.nav-link-active {
+    opacity: unset;
+}
+
+.nav-link:active {
+    opacity: unset;
+}
+
+.nav-link:active .btn-item-menu {
+    background: #5081FB;
+}
+
+.btn-item-menu-active {
+    background: #5081FB;
+}
+
+.nav-link-usuario {
+    height: 56px;
+    text-decoration: none;
+    padding: 0px 0px;
+    display: flex;
+    align-items: center;
+    
+}
+
+.nav-link-usuario:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
 }
 
 .font-title {
@@ -96,7 +137,7 @@ body {
     font-size: 16px;
     line-height: 24px;
     color: #FFFFFF;
-    opacity: 0.56;
+    pointer-events: none;
 }
 
 .hr-menu {
@@ -238,7 +279,7 @@ body {
         position: absolute;
         top: 0;
         right: 0;
-        margin-top: 44px;
+        margin-top: 32px;
         margin-right: 32px;
     }
 
