@@ -1,8 +1,10 @@
-html,
-body {
+html {
     height: 100%;
+}
+
+html,
+body {    
     background-color: #051D3B;
-    overflow: auto;
 }
 
 .div-btn-nav {
