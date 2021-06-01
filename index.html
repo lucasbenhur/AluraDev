@@ -7,6 +7,7 @@
     <title>AluraDev</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/highlight.css">
 </head>
 <body>
     <nav class="navbar">
@@ -78,14 +79,16 @@
             </ul>
         </div>
         <div id="col-code-editor" class="col-md-12 col-lg-6">
-            <div id="div-code-editor" class="bg-code-editor">
+            <div class="bg-code-editor">
                 <div class="btn-mac">
                     <img src="img/mac_buttons.svg">
                 </div>
-                <textarea id="txt-code-editor" class="code-editor"></textarea>
+                <div id="div-code-editor" class="div-code-editor">
+                    <code id="code-editor" class="code-editor" contenteditable="true" spellcheck="false"></code>
+                </div>
             </div>
             <div style="margin-top: 32px;">
-                <button class="btn-outlined">
+                <button id="btn-highligth" class="btn-outlined">
                     Visualizar com o highlight
                 </button>
             </div>
@@ -106,9 +109,9 @@
                 </div>
                 <div class="form-item">
                     <select id="select-linguagem" class="input-select">
-                        <option class="option-select" value="0" selected>JavaScript</option>
-                        <option class="option-select" value="1">HTML</option>
-                        <option class="option-select" value="2">CSS</option>
+                        <option class="option-select" value="javascript" selected>JavaScript</option>
+                        <option class="option-select" value="html">HTML</option>
+                        <option class="option-select" value="css">CSS</option>
                     </select>
                 </div>
                 <div class="form-item">
@@ -119,11 +122,12 @@
                         Salvar projeto
                     </button>
                 </div>
-        </form>
+            </form>
         </div>
     </div>
 </body>
 <script src="js/jQuery.min.js"></script>
 <script src="js/bootstrap.bundle.min.js"></script>
+<script src="js/highlight.min.js"></script>
 <script src="js/index.js"></script>
 </html>

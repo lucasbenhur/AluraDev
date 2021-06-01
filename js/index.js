@@ -3,7 +3,7 @@ menuCodeEditor.addClass("nav-link-active");
 $(menuCodeEditor[0].firstElementChild).addClass("btn-item-menu-active");
 
 $("#color").on("input", function() {
-    $("#div-code-editor").css("background", this.value);
+    $(".bg-code-editor").css("background", this.value);
 });
 
 $(".nav-link").on("click", function() {
@@ -25,4 +25,17 @@ $("#menu-comunidade").on("click", function () {
 
     $("#col-code-editor").css("display", "none");
     $("#col-formulario").css("display", "none");
+});
+
+$("#btn-highligth").on("click", function() {
+    hljs.highlightElement($("#code-editor")[0]);
+});
+
+$("#select-linguagem").on("change", function() {
+    var linguagem = this;
+    var divCodigo = $("#div-code-editor")[0];
+    var codigo = $("#code-editor")[0];
+
+    divCodigo.innerHTML = `<code id="code-editor" class="code-editor hljs ${linguagem.value}" contenteditable="true" spellcheck="false"></code>`;
+    divCodigo.firstElementChild.innerHTML = codigo.innerHTML;
 });
