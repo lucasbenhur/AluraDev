@@ -190,8 +190,9 @@ body {
     font-size: 14px;
     line-height: 18px;
     overflow: auto;
-    min-inline-size: max-content;
     outline: none;
+    min-inline-size: max-content;
+    white-space: pre;
 }
 
 .code-editor::-webkit-scrollbar {

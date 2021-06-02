@@ -1,5 +1,7 @@
 var menuCodeEditor = $("#menu-code-editor");
+
 menuCodeEditor.addClass("nav-link-active");
+
 $(menuCodeEditor[0].firstElementChild).addClass("btn-item-menu-active");
 
 $("#color").on("input", function() {
@@ -28,14 +30,5 @@ $("#menu-comunidade").on("click", function () {
 });
 
 $("#btn-highligth").on("click", function() {
-    hljs.highlightElement($("#code-editor")[0]);
-});
-
-$("#select-linguagem").on("change", function() {
-    var linguagem = this;
-    var divCodigo = $("#div-code-editor")[0];
-    var codigo = $("#code-editor")[0];
-
-    divCodigo.innerHTML = `<code id="code-editor" class="code-editor hljs ${linguagem.value}" contenteditable="true" spellcheck="false"></code>`;
-    divCodigo.firstElementChild.innerHTML = codigo.innerHTML;
+    $("#code-editor").html(hljs.highlight($("#code-editor")[0].innerText, {language: $("#select-linguagem").val()}).value);
 });
