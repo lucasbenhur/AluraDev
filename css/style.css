@@ -157,6 +157,7 @@ body {
 
 .div-code-editor {
     overflow: auto;
+    box-shadow: 0px 16px 24px rgba(0, 0, 0, 0.24);
 }
 
 .div-code-editor::-webkit-scrollbar {
@@ -179,7 +180,6 @@ body {
     resize: none;
     height: 262px;
     background: #141414;
-    box-shadow: 0px 16px 24px rgba(0, 0, 0, 0.24);
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
     padding-top: 24px;
@@ -212,12 +212,13 @@ body {
 
 .btn-mac {
     width: 100%;
-    height: 36px;
+    height: 40px;
     background: #141414;
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
     padding-left: 16px;
     padding-top: 16px;
+    box-shadow: 0px 16px 24px rgba(0, 0, 0, 0.24);
 }
 
 #col-code-editor {
