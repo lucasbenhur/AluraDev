@@ -30,27 +30,33 @@ $("#menu-comunidade").on("click", function () {
 });
 
 $("#btn-highligth").on("click", function() {
-    if (highlightOn !== true) {
-        ligaHighligth();
-        highlightOn = true;
-        $("#btn-highligth")[0].innerText = "Visualizar sem o highlight";
-    } else {
-        desligaHighligth();
-        highlightOn = false;
-        $("#btn-highligth")[0].innerText = "Visualizar com o highlight";
-    }    
-});
-
-$("#select-linguagem").on("change", function() {
     if (highlightOn === true) {
+        desligaHighligth();
+    } else {
         ligaHighligth();
     }
 });
 
+$("#select-linguagem").on("change", function() {
+    desligaHighligth();
+});
+
 function ligaHighligth () {
     $("#code-editor").html(hljs.highlight($("#code-editor")[0].innerText, {language: $("#select-linguagem").val()}).value);
+    highlightOn = true;
+    atualizaBtnHighlight();
 };
 
 function desligaHighligth () {
     $("#code-editor").html(hljs.highlight($("#code-editor")[0].innerText, {language: "plaintext"}).value);
-}
+    highlightOn = false;
+    atualizaBtnHighlight();
+};
+
+function atualizaBtnHighlight () {
+    if (highlightOn === false) {
+        $("#btn-highligth")[0].innerText = "Visualizar com o highlight";
+    } else {
+        $("#btn-highligth")[0].innerText = "Visualizar sem o highlight";
+    }
+};
