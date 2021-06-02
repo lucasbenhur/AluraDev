@@ -1,8 +1,8 @@
 var menuCodeEditor = $("#menu-code-editor");
-
 menuCodeEditor.addClass("nav-link-active");
-
 $(menuCodeEditor[0].firstElementChild).addClass("btn-item-menu-active");
+
+var highlightOn = false;
 
 $("#color").on("input", function() {
     $(".bg-code-editor").css("background", this.value);
@@ -30,5 +30,27 @@ $("#menu-comunidade").on("click", function () {
 });
 
 $("#btn-highligth").on("click", function() {
-    $("#code-editor").html(hljs.highlight($("#code-editor")[0].innerText, {language: $("#select-linguagem").val()}).value);
+    if (highlightOn !== true) {
+        ligaHighligth();
+        highlightOn = true;
+        $("#btn-highligth")[0].innerText = "Visualizar sem o highlight";
+    } else {
+        desligaHighligth();
+        highlightOn = false;
+        $("#btn-highligth")[0].innerText = "Visualizar com o highlight";
+    }    
 });
+
+$("#select-linguagem").on("change", function() {
+    if (highlightOn === true) {
+        ligaHighligth();
+    }
+});
+
+function ligaHighligth () {
+    $("#code-editor").html(hljs.highlight($("#code-editor")[0].innerText, {language: $("#select-linguagem").val()}).value);
+};
+
+function desligaHighligth () {
+    $("#code-editor").html(hljs.highlight($("#code-editor")[0].innerText, {language: "plaintext"}).value);
+}
