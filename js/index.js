@@ -302,7 +302,7 @@ function carregaProjetos(filtro) {
                                 '<div class="col col-lg-5" style="display: flex;">' +
                                     '<button class="btn-comentario">' +
                                         '<img class="img-comentario" src="img/icon_comentario.svg">' +
-                                        /*getRandom() +*/
+                                        0 +
                                     '</button>' +
                                     '<button class="btn-like" onclick="likeProjeto(\'' + key + '\')">' +
                                         '<div style="display: flex;">' +
@@ -478,3 +478,20 @@ $(".nav-link-usuario").on("click", function () {
 function getUsuario () {
     return JSON.parse(localStorage.getItem("Usuario"));
 };
+
+$("#btn-exportar").on("click", function () {
+    let nomeDoProjeto = $("#txt-nome-projeto").val();
+
+    if (!nomeDoProjeto || nomeDoProjeto === "") {
+        nomeDoProjeto = "SemTitulo";
+    }
+
+    html2canvas($("#col-code-editor .bg-code-editor"), {
+        onrendered: function(canvas) {
+            theCanvas = canvas;
+            canvas.toBlob(function(blob) {
+                saveAs(blob, nomeDoProjeto.trim() + ".png"); 
+            });
+        }
+    });
+});

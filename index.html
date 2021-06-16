@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-<head>
+<head>    
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -82,8 +82,17 @@
         </div>
         <div id="col-code-editor" class="col-md-12 col-lg-6">
             <div class="bg-code-editor">
-                <div class="btn-mac">
-                    <img src="img/mac_buttons.svg">
+                <div id="ferramentas-editor">
+                    <div class="btn-mac" style="display: flex;">
+                        <div class="col-11">
+                            <img src="img/mac_buttons.svg">
+                        </div>
+                        <div class="col-1" style="text-align: -webkit-right;">
+                            <button id="btn-exportar" class="btn-icon" style="width:32px; height:24px;">
+                                <img src="img/icon_camera.svg" width="24px" height="24px">
+                            </button>
+                        </div>
+                    </div>                    
                 </div>
                 <div id="div-code-editor" class="div-code-editor">
                     <code id="code-editor" class="code-editor" contenteditable="true" spellcheck="false"></code>
@@ -134,5 +143,7 @@
 <script src="js/bootstrap.bundle.min.js"></script>
 <script src="js/highlight.min.js"></script>
 <script src="js/sweetalert2.min.js"></script>
+<script src="js/html2canvas.min.js"></script>
+<script src="js/FileSaver.min.js"></script>
 <script src="js/index.js"></script>
 </html>
