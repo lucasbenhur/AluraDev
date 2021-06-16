@@ -8,11 +8,12 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/highlight.css">
+    <link rel="stylesheet" href="css/sweetalert2.min.css">
 </head>
 <body>
     <nav class="navbar">
         <div id="col-logo" class="col-md-3 col-lg-3">
-            <a href="index.html">
+            <a href="#">
                 <img src="img/Logo.png">
             </a>
         </div>
@@ -94,37 +95,35 @@
             </div>
         </div>
         <div id="col-formulario" class="col-md-12 col-lg-3">
-            <form onsubmit="salvar()">
-                <div class="form-item font-sidebar-title">
-                    Seu Projeto
+            <div class="form-item font-sidebar-title">
+                Seu Projeto
+            </div>
+            <div class="form-item">
+                <input id="txt-nome-projeto" type="text" class="input-texto" placeholder="Nome do seu projeto">
+            </div>
+            <div class="form-item">
+                <textarea id="txt-descricao-projeto" placeholder="Descrição do seu projeto" class="input-texto" style="height: 80px;"></textarea>
+            </div>
+            <div class="form-item font-sidebar-title" style="margin-top: 40px;">
+                Personalização
+            </div>
+            <div class="row">
+                <div class="form-item col-md-6 col-lg-12">
+                    <select id="select-linguagem" class="input-select">
+                        <option class="option-select" value="javascript" selected>JavaScript</option>
+                        <option class="option-select" value="html">HTML</option>
+                        <option class="option-select" value="css">CSS</option>
+                    </select>
                 </div>
-                <div class="form-item">
-                    <input id="txt-nome-projeto" type="text" class="input-texto" placeholder="Nome do seu projeto" required>
+                <div class="form-item col-md-6 col-lg-12">
+                    <input type="color" id="color" class="input-color" value="#6BD1FF">
                 </div>
-                <div class="form-item">
-                    <textarea id="txt-descricao-projeto" placeholder="Descrição do seu projeto" class="input-texto" style="height: 80px;" required></textarea>
-                </div>
-                <div class="form-item font-sidebar-title" style="margin-top: 40px;">
-                    Personalização
-                </div>
-                <div class="row">
-                    <div class="form-item col-md-6 col-lg-12">
-                        <select id="select-linguagem" class="input-select">
-                            <option class="option-select" value="javascript" selected>JavaScript</option>
-                            <option class="option-select" value="html">HTML</option>
-                            <option class="option-select" value="css">CSS</option>
-                        </select>
-                    </div>
-                    <div class="form-item col-md-6 col-lg-12">
-                        <input type="color" id="color" class="input-color" value="#6BD1FF">
-                    </div>
-                </div>
-                <div style="margin-top: 32px;">
-                    <button type="submit" class="btn-filled">
-                        Salvar projeto
-                    </button>
-                </div>
-            </form>
+            </div>
+            <div style="margin-top: 32px;">
+                <button id="btn-salvar" class="btn-filled">
+                    Salvar projeto
+                </button>
+            </div>
         </div>
         <div id="col-comunidade" class="col-lg-9" style="display: none;">
         </div>
@@ -133,5 +132,6 @@
 <script src="js/jQuery.min.js"></script>
 <script src="js/bootstrap.bundle.min.js"></script>
 <script src="js/highlight.min.js"></script>
+<script src="js/sweetalert2.min.js"></script>
 <script src="js/index.js"></script>
 </html>
