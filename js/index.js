@@ -1,10 +1,30 @@
-carregaUsuario();
-
-let menuCodeEditor = $("#menu-code-editor");
-menuCodeEditor.addClass("nav-link-active");
-$(menuCodeEditor[0].firstElementChild).addClass("btn-item-menu-active");
-
 var highlightOn = false;
+carregaUsuario();
+preparaMenu();
+
+function preparaMenu() {
+    let menuCodeEditor = $("#menu-code-editor");
+    menuCodeEditor.addClass("nav-link-active");
+    $(menuCodeEditor[0].firstElementChild).addClass("btn-item-menu-active");
+};
+
+function carregaUsuario() {
+    let usuario = JSON.parse(localStorage.getItem("Usuario"));
+
+    if (usuario) {
+        $("#img-user").attr("src", usuario.avatar);
+        $("#img-user").addClass("rounded-circle");
+        $("#user-name").html(usuario.userName);
+        $("#user-name").css("margin-right", "0px")
+        $("#btn-logout").css("display", "initial");
+    } else {
+        $("#img-user").attr("src", "img/icon_login.svg");
+        $("#img-user").removeClass("rounded-circle");
+        $("#user-name").html("Login");
+        $("#user-name").css("margin-right", "12px")
+        $("#btn-logout").css("display", "none");
+    }
+};
 
 $("#color").on("input", function () {
     $("#col-code-editor .bg-code-editor").css("background", this.value);
@@ -314,7 +334,7 @@ function limpaCampos() {
 };
 
 function getRandom() {
-    return Math.floor(Math.random() * 65536);
+    return Math.floor(Math.random() * 100);
 };
 
 $(".nav-link-usuario").on("click", function () {
@@ -384,21 +404,3 @@ $(".nav-link-usuario").on("click", function () {
         });
     }
 });
-
-function carregaUsuario() {
-    let usuario = JSON.parse(localStorage.getItem("Usuario"));
-
-    if (usuario) {
-        $("#img-user").attr("src", usuario.avatar);
-        $("#img-user").addClass("rounded-circle");
-        $("#user-name").html(usuario.userName);
-        $("#user-name").css("margin-right", "0px")
-        $("#btn-logout").css("display", "initial");
-    } else {
-        $("#img-user").attr("src", "img/icon_login.svg");
-        $("#img-user").removeClass("rounded-circle");
-        $("#user-name").html("Login");
-        $("#user-name").css("margin-right", "12px")
-        $("#btn-logout").css("display", "none");
-    }
-};
