@@ -331,9 +331,9 @@ function carregaProjetos(filtro) {
 
     if (!htmlProjetos ||
         htmlProjetos === "") {
-        $("#col-comunidade").html(htmlProjetos);
-    } else {
         $("#col-comunidade").html('<h1 class="font-title" style="margin-left: -12px;">Nenhum projeto encontrado, verifique o filtro ou cadastre um projeto!</h1');
+    } else {
+        $("#col-comunidade").html(htmlProjetos);
     }    
 };
 
