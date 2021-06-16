@@ -1,14 +1,16 @@
+carregaUsuario();
+
 let menuCodeEditor = $("#menu-code-editor");
 menuCodeEditor.addClass("nav-link-active");
 $(menuCodeEditor[0].firstElementChild).addClass("btn-item-menu-active");
 
 var highlightOn = false;
 
-$("#color").on("input", function() {
+$("#color").on("input", function () {
     $("#col-code-editor .bg-code-editor").css("background", this.value);
 });
 
-$(".nav-link").on("click", function() {
+$(".nav-link").on("click", function () {
     $(".nav-link").removeClass("nav-link-active")
     $(".nav-link .btn-item-menu").removeClass("btn-item-menu-active")
 })
@@ -33,7 +35,7 @@ $("#menu-comunidade").on("click", function () {
     carregaProjetos();
 });
 
-$("#btn-highligth").on("click", function() {
+$("#btn-highligth").on("click", function () {
     if (highlightOn === true) {
         desligaHighligth();
     } else {
@@ -184,7 +186,11 @@ function carregaProjetos() {
 
     Object.keys(localStorage).forEach((key) => {
 
-        index++;
+        if (key === "Usuario") {
+            return;
+        }
+
+        index++;        
 
         let projeto = JSON.parse(localStorage.getItem(key));
 
@@ -222,11 +228,11 @@ function carregaProjetos() {
                                 '<div class="col col-lg-5" style="display: flex;">' +
                                     '<button class="btn-comentario">' +
                                         '<img class="img-comentario" src="img/icon_comentario.svg">' +
-                                        '9' +
+                                        getRandom() +
                                     '</button>' +
                                     '<button class="btn-favorito" onclick="favoritaProjeto(\'' + key + '\')">' +
                                         htmlImgFavorito +
-                                        '9' +
+                                        getRandom() +
                                     '</button>' +
                                     '<button class="btn-excluir" onclick="excluiProjeto(\'' + key + '\')">' +
                                         '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">' +
@@ -299,4 +305,77 @@ function limpaCampos() {
     $("#select-linguagem")[0].value = "javascript";
     $("#color")[0].value = "#6BD1FF";
     $("#col-code-editor .bg-code-editor").css("background", "#6BD1FF");
+};
+
+function getRandom() {
+    return Math.floor(Math.random() * 65536);
+};
+
+function login() {
+    let usuario = JSON.parse(localStorage.getItem("Usuario"));
+
+    if (usuario) {
+        return;
+    }
+
+    Swal.fire({
+        title: 'Digite seu usuário do GitHub',
+        input: 'text',
+        inputAttributes: {
+          autocapitalize: 'off'
+        },
+        showCancelButton: true,
+        confirmButtonText: 'Logar',
+        confirmButtonColor: "#5081FB",
+        cancelButtonText: 'Cancelar',
+        cancelButtonColor: "#d33",
+        showLoaderOnConfirm: true,
+        preConfirm: (userName) => {
+          return fetch(`//api.github.com/users/${userName}`)
+            .then(response => {
+              if (!response.ok) {
+                throw new Error(response.statusText)
+              }
+              return response.json()
+            })
+            .catch(() => {
+              Swal.showValidationMessage(
+                `Usuário não encontrado!`
+              )
+            })
+        },
+        allowOutsideClick: () => !Swal.isLoading()
+      }).then((result) => {
+        if (result.isConfirmed) {
+            let usuario = {
+                "userName": result.value.login,
+                "avatar": result.value.avatar_url
+            }
+
+            localStorage.setItem("Usuario", JSON.stringify(usuario));
+
+            Swal.fire({
+                icon: 'success',
+                title: 'Sucesso!',
+                text: 'Você está logado.',
+                confirmButtonColor: '#5081FB'
+            });
+
+            carregaUsuario();
+        }
+    });
+};
+
+function carregaUsuario() {
+    let usuario = JSON.parse(localStorage.getItem("Usuario"));
+
+    if (usuario) {
+        $("#user-img").attr("src", usuario.avatar);
+        $("#user-img").addClass("rounded-circle");
+        $("#user-name").html(usuario.userName);
+    } else {
+        $("#user-img").attr("src", "img/icon-login.svg");
+        $("#user-img").removeClass("rounded-circle");
+        $("#user-name").html("Login");
+    }
 };
