@@ -116,7 +116,7 @@ function defaultColunasNavbar () {
 
 $("#btn-salvar").on("click", function () {
     let isValid = true;
-    let listaDeErros = "<ul>";
+    let listaDeErros = "<ul class='lista-erros'>";
     let nomeDoProjeto = $("#txt-nome-projeto")[0];
     let descricaoDoProjeto = $("#txt-descricao-projeto")[0];
     let codeEditor = $("#code-editor")[0];

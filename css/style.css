@@ -7,13 +7,6 @@ body {
     background-color: #051D3B;
 }
 
-
-
-li {
-    text-align: -webkit-left;
-    margin-left: 20%;
-}
-
 .div-btn-nav {
     text-align: right;
 }
@@ -522,6 +515,11 @@ li {
     padding-right: 0px;
 }
 
+.lista-erros {
+    margin-left: 15%;
+    text-align: -webkit-left;
+}
+
 /* <= 991px */
 @media(max-width: 991px) {
     #sidebar-title {
@@ -619,5 +617,26 @@ li {
 
     #btn-buscar {
         display: none;
+    }
+}
+
+/* <= 500px */
+@media(max-width: 500px) {
+    .lista-erros {
+        margin-left: 10%;
+    }
+}
+
+/* <= 450px */
+@media(max-width: 450px) {
+    .lista-erros {
+        margin-left: 5%;
+    }
+}
+
+/* <= 400px */
+@media(max-width: 400px) {
+    .lista-erros {
+        margin-left: -5%;
     }
 }
