@@ -13,6 +13,8 @@ function carregaUsuario() {
 
     if (usuario) {
         $("#img-user").attr("src", usuario.avatar);
+        $("#img-user").attr("width", "32px");
+        $("#img-user").attr("height", "32px");
         $("#img-user").addClass("rounded-circle");
         $("#user-name").html(usuario.userName);
         $("#user-name").css("margin-right", "0px")
@@ -20,6 +22,8 @@ function carregaUsuario() {
     } else {
         $("#img-user").attr("src", "img/icon_login.svg");
         $("#img-user").removeClass("rounded-circle");
+        $("#img-user").attr("width", "24px");
+        $("#img-user").attr("height", "24px");
         $("#user-name").html("Login");
         $("#user-name").css("margin-right", "12px")
         $("#btn-logout").css("display", "none");
