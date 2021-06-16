@@ -516,7 +516,7 @@ body {
 }
 
 .lista-erros {
-    margin-left: 15%;
+    margin-left: 20%;
     text-align: -webkit-left;
 }
 
@@ -623,14 +623,14 @@ body {
 /* <= 500px */
 @media(max-width: 500px) {
     .lista-erros {
-        margin-left: 10%;
+        margin-left: 15%;
     }
 }
 
 /* <= 450px */
 @media(max-width: 450px) {
     .lista-erros {
-        margin-left: 5%;
+        margin-left: 7.5%;
     }
 }
 

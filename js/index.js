@@ -117,11 +117,17 @@ function defaultColunasNavbar () {
 };
 
 $("#btn-salvar").on("click", function () {
+    let usuario = JSON.parse(localStorage.getItem("Usuario"));
     let isValid = true;
     let listaDeErros = "<ul class='lista-erros'>";
     let nomeDoProjeto = $("#txt-nome-projeto")[0];
     let descricaoDoProjeto = $("#txt-descricao-projeto")[0];
     let codeEditor = $("#code-editor")[0];
+
+    if (!usuario) {
+        isValid = false;
+        listaDeErros += "<li>Faça o <b>login</b> para salvar!</li>";
+    }
 
     if (nomeDoProjeto.value === "") {
         isValid = false;
@@ -282,12 +288,12 @@ function excluiProjeto(idProjeto) {
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#5081FB',
-        cancelButtonColor: '#d33',
+        cancelButtonColor: '#616262',
         confirmButtonText: 'Sim, excluir!',
         cancelButtonText: 'Cancelar'
     }).then((result) => {
-        localStorage.removeItem(idProjeto);
         if (result.isConfirmed) {
+            localStorage.removeItem(idProjeto);
             Swal.fire({
                 title: 'Excluído!',
                 text: 'O projeto foi excluído.',
@@ -311,71 +317,88 @@ function getRandom() {
     return Math.floor(Math.random() * 65536);
 };
 
-function login() {
+$(".nav-link-usuario").on("click", function () {
     let usuario = JSON.parse(localStorage.getItem("Usuario"));
 
     if (usuario) {
-        return;
-    }
-
-    Swal.fire({
-        title: 'Digite seu usuário do GitHub',
-        input: 'text',
-        inputAttributes: {
-          autocapitalize: 'off'
-        },
-        showCancelButton: true,
-        confirmButtonText: 'Logar',
-        confirmButtonColor: "#5081FB",
-        cancelButtonText: 'Cancelar',
-        cancelButtonColor: "#d33",
-        showLoaderOnConfirm: true,
-        preConfirm: (userName) => {
-          return fetch(`//api.github.com/users/${userName}`)
-            .then(response => {
-              if (!response.ok) {
-                throw new Error(response.statusText)
-              }
-              return response.json()
-            })
-            .catch(() => {
-              Swal.showValidationMessage(
-                `Usuário não encontrado!`
-              )
-            })
-        },
-        allowOutsideClick: () => !Swal.isLoading()
-      }).then((result) => {
-        if (result.isConfirmed) {
-            let usuario = {
-                "userName": result.value.login,
-                "avatar": result.value.avatar_url
+        Swal.fire({
+            title: 'Sair?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#5081FB',
+            cancelButtonColor: '#616262',
+            confirmButtonText: 'Sim',
+            cancelButtonText: 'Não'
+        }).then((result) => {        
+            if (result.isConfirmed) {
+                localStorage.removeItem("Usuario");
+                carregaUsuario();
             }
+        });
+    } else {
+        Swal.fire({
+            title: 'Digite seu usuário do GitHub',
+            input: 'text',
+            inputAttributes: {
+            autocapitalize: 'off'
+            },
+            showCancelButton: true,
+            confirmButtonText: 'Logar',
+            confirmButtonColor: "#5081FB",
+            cancelButtonText: 'Cancelar',
+            cancelButtonColor: "#616262",
+            showLoaderOnConfirm: true,
+            preConfirm: (userName) => {
+            return fetch(`//api.github.com/users/${userName}`)
+                .then(response => {
+                if (!response.ok) {
+                    throw new Error(response.statusText)
+                }
+                return response.json()
+                })
+                .catch(() => {
+                Swal.showValidationMessage(
+                    `Usuário não encontrado!`
+                )
+                })
+            },
+            allowOutsideClick: () => !Swal.isLoading()
+        }).then((result) => {
+            if (result.isConfirmed) {
+                let usuario = {
+                    "userName": result.value.login,
+                    "avatar": result.value.avatar_url
+                }
 
-            localStorage.setItem("Usuario", JSON.stringify(usuario));
+                localStorage.setItem("Usuario", JSON.stringify(usuario));
 
-            Swal.fire({
-                icon: 'success',
-                title: 'Sucesso!',
-                text: 'Você está logado.',
-                confirmButtonColor: '#5081FB'
-            });
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Sucesso!',
+                    text: 'Você está logado.',
+                    confirmButtonColor: '#5081FB'
+                });
 
-            carregaUsuario();
-        }
-    });
-};
+                carregaUsuario();
+            }
+        });
+    }
+});
 
 function carregaUsuario() {
     let usuario = JSON.parse(localStorage.getItem("Usuario"));
 
     if (usuario) {
-        $("#user-img").attr("src", usuario.avatar);
-        $("#user-img").addClass("rounded-circle");
+        $("#img-user").attr("src", usuario.avatar);
+        $("#img-user").addClass("rounded-circle");
         $("#user-name").html(usuario.userName);
+        $("#user-name").css("margin-right", "0px")
+        $("#btn-logout").css("display", "initial");
     } else {
-        $("#user-img").attr("src", "img/icon-login.svg");
-        $("#user-img").removeClass("rounded-circle");
+        $("#img-user").attr("src", "img/icon_login.svg");
+        $("#img-user").removeClass("rounded-circle");
         $("#user-name").html("Login");
+        $("#user-name").css("margin-right", "12px")
+        $("#btn-logout").css("display", "none");
     }
 };
