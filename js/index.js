@@ -49,6 +49,8 @@ $("#menu-code-editor").on("click", function () {
 });
 
 $("#menu-comunidade").on("click", function () {
+    limpaCampos();
+
     $(this).addClass("nav-link-active");
     $(this.firstElementChild).addClass("btn-item-menu-active");
 
@@ -177,7 +179,11 @@ $("#btn-salvar").on("click", function () {
             "linguagem": $("#select-linguagem").val(),
             "cor": $("#color").val(),
             "codigo": codeEditor.innerText,
-            "favorito": "N"
+            "favorito": "N",
+            "usuario": {
+                "userName": usuario.userName,
+                "avatar": usuario.avatar
+            }
         }
 
         localStorage.setItem(newGuid(), JSON.stringify(projeto));
@@ -220,9 +226,24 @@ function carregaProjetos() {
             return;
         }
 
-        index++;        
-
         let projeto = JSON.parse(localStorage.getItem(key));
+
+        if (!projeto.usuario){
+            projeto = {
+                "nome": projeto.nome,
+                "descricao": projeto.descricao,
+                "linguagem": projeto.linguagem,
+                "cor": projeto.cor,
+                "codigo": projeto.codigo,
+                "favorito": projeto.favorito,
+                "usuario": {
+                    "userName": "",
+                    "avatar": ""
+                }
+            }
+        }
+
+        index++;        
 
         if (index % 2 !== 0) {
             htmlProjetos += '<div class="row">' +
@@ -273,8 +294,8 @@ function carregaProjetos() {
                                 '</div>' +
                                 '<div class="col col-lg-7" style="text-align: -webkit-right;">' +
                                     '<button class="btn-usuario">' +
-                                        '<img src="https://avatars.githubusercontent.com/u/46672988?v=4" class="rounded-circle img-usuario" width="32px" height="32px">' +
-                                        '@lucas' +
+                                        '<img src=' + projeto.usuario.avatar +' class="rounded-circle img-usuario" width="32px" height="32px">' +
+                                        '@' + projeto.usuario.userName +
                                     '</button>' +
                                 '</div>' +
                             '</div>' +
