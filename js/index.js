@@ -329,7 +329,7 @@ function carregaProjetos(filtro) {
         }
     });
 
-    $("#col-comunidade").html('<h1 class="font-title">Nenhum projeto encontrado, verifique o filtro ou cadastre um projeto!</h1');
+    $("#col-comunidade").html('<h1 class="font-title" style="margin-left: -12px;">Nenhum projeto encontrado, verifique o filtro ou cadastre um projeto!</h1');
 };
 
 function likeProjeto(idProjeto) {
