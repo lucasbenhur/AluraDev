@@ -449,11 +449,11 @@ body {
     border-radius: 16px;
 }
 
-.cartao .img-favorito {
+.cartao .img-like {
     margin-right: 10px;
 }
 
-.cartao .btn-favorito {
+.cartao .btn-like {
     width: auto;
     background: none;
     outline: none;
@@ -465,12 +465,12 @@ body {
     color: #FFFFFF;
 }
 
-.cartao .btn-favorito:hover {
+.cartao .btn-like:hover {
     background: rgba(255, 255, 255, 0.08);
     border-radius: 16px;
 }
 
-.cartao .btn-favorito:active {
+.cartao .btn-like:active {
     background: rgba(255, 255, 255, 0.16);
     border-radius: 16px;
 }

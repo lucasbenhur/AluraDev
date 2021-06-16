@@ -179,11 +179,12 @@ $("#btn-salvar").on("click", function () {
             "linguagem": $("#select-linguagem").val(),
             "cor": $("#color").val(),
             "codigo": codeEditor.innerText,
-            "favorito": "N",
+            "likes": [],
             "usuario": {
                 "userName": usuario.userName,
                 "avatar": usuario.avatar
-            }
+            },
+            "comentarios": [{}]
         }
 
         localStorage.setItem(newGuid(), JSON.stringify(projeto));
@@ -213,8 +214,9 @@ function newGuid() {
 
 function carregaProjetos() {
 
+    let usuario = JSON.parse(localStorage.getItem("Usuario"));
     let htmlProjetos = "";
-    let htmlImgFavorito = "";
+    let htmlImgLike = "";
     
     $("#col-comunidade").html(htmlProjetos);
 
@@ -229,18 +231,7 @@ function carregaProjetos() {
         let projeto = JSON.parse(localStorage.getItem(key));
 
         if (!projeto.usuario){
-            projeto = {
-                "nome": projeto.nome,
-                "descricao": projeto.descricao,
-                "linguagem": projeto.linguagem,
-                "cor": projeto.cor,
-                "codigo": projeto.codigo,
-                "favorito": projeto.favorito,
-                "usuario": {
-                    "userName": "",
-                    "avatar": ""
-                }
-            }
+            return;
         }
 
         index++;        
@@ -252,10 +243,10 @@ function carregaProjetos() {
             htmlProjetos += '<div class="col-right col-lg-6">';
         }
 
-        if (projeto.favorito === "S") {
-            htmlImgFavorito = '<img class="img-favorito" src="img/icon_favorito_red.svg" data-favorito="S">';
+        if (usuario && projeto.likes.indexOf(usuario.userName) >= 0) {
+            htmlImgLike = '<img class="img-like" src="img/icon_like_red.svg">';
         } else {
-            htmlImgFavorito = '<img class="img-favorito" src="img/icon_favorito.svg" data-favorito="N">';
+            htmlImgLike = '<img class="img-like" src="img/icon_like.svg">';
         }
         
         htmlProjetos += '<div id="' + key + '" class="cartao"> ' +
@@ -279,11 +270,15 @@ function carregaProjetos() {
                                 '<div class="col col-lg-5" style="display: flex;">' +
                                     '<button class="btn-comentario">' +
                                         '<img class="img-comentario" src="img/icon_comentario.svg">' +
-                                        getRandom() +
+                                        /*getRandom() +*/
                                     '</button>' +
-                                    '<button class="btn-favorito" onclick="favoritaProjeto(\'' + key + '\')">' +
-                                        htmlImgFavorito +
-                                        getRandom() +
+                                    '<button class="btn-like" onclick="likeProjeto(\'' + key + '\')">' +
+                                        '<div style="display: flex;">' +
+                                            htmlImgLike +
+                                            '<div id="numero-likes">' +
+                                                projeto.likes.length +
+                                            '</div>' +
+                                        '</div>' +
                                     '</button>' +
                                     '<button class="btn-excluir" onclick="excluiProjeto(\'' + key + '\')">' +
                                         '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">' +
@@ -310,19 +305,33 @@ function carregaProjetos() {
     $("#col-comunidade").html(htmlProjetos);
 };
 
-function favoritaProjeto(idProjeto) {
-    let img_favorito = $("#"+idProjeto + " .img-favorito");
-    
-    if (img_favorito.attr("data-favorito") === "N") {
-        img_favorito.attr("data-favorito", "S");
-        img_favorito.attr("src", "img/icon_favorito_red.svg");
-    } else {
-        img_favorito.attr("data-favorito", "N");
-        img_favorito.attr("src", "img/icon_favorito.svg");
+function likeProjeto(idProjeto) {
+    let usuario = JSON.parse(localStorage.getItem("Usuario"));
+
+    if (!usuario) {
+        Swal.fire({
+            text: "Faça o login para interagir na comunidade!",
+            icon: "error",
+            confirmButtonColor: "#5081FB"
+        });
+
+        return;
     }
 
+    let img_like = $("#"+idProjeto + " .img-like");
     let projeto = JSON.parse(localStorage.getItem(idProjeto));
-    projeto.favorito = img_favorito.attr("data-favorito");
+    
+    if (img_like.attr("src") === "img/icon_like.svg") {
+        projeto.likes.push(usuario.userName);
+        $("#"+idProjeto + " #numero-likes").html(projeto.likes.length);
+        img_like.attr("src", "img/icon_like_red.svg");
+    } else {
+        let pos =  projeto.likes.indexOf(usuario.userName);
+        projeto.likes.splice(pos, 1);
+        $("#"+idProjeto + " #numero-likes").html(projeto.likes.length);
+        img_like.attr("src", "img/icon_like.svg");
+    }    
+    
     localStorage.setItem(idProjeto, JSON.stringify(projeto));
 };
 
@@ -358,10 +367,6 @@ function limpaCampos() {
     $("#col-code-editor .bg-code-editor").css("background", "#6BD1FF");
 };
 
-function getRandom() {
-    return Math.floor(Math.random() * 100);
-};
-
 $(".nav-link-usuario").on("click", function () {
     let usuario = JSON.parse(localStorage.getItem("Usuario"));
 
@@ -378,6 +383,8 @@ $(".nav-link-usuario").on("click", function () {
             if (result.isConfirmed) {
                 localStorage.removeItem("Usuario");
                 carregaUsuario();
+                limpaCampos();
+                carregaProjetos();
             }
         });
     } else {
@@ -425,6 +432,8 @@ $(".nav-link-usuario").on("click", function () {
                 });
 
                 carregaUsuario();
+                limpaCampos();
+                carregaProjetos();
             }
         });
     }
