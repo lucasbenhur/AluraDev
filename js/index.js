@@ -9,7 +9,7 @@ function preparaMenu() {
 };
 
 function carregaUsuario() {
-    let usuario = JSON.parse(localStorage.getItem("Usuario"));
+    let usuario = getUsuario();
 
     if (usuario) {
         $("#img-user").attr("src", usuario.avatar);
@@ -34,12 +34,23 @@ $("#color").on("input", function () {
     $("#col-code-editor .bg-code-editor").css("background", this.value);
 });
 
-$(".nav-link").on("click", function () {
-    $(".nav-link").removeClass("nav-link-active")
-    $(".nav-link .btn-item-menu").removeClass("btn-item-menu-active")
-})
+$('#txt-buscar').keypress(function(e){
+    let filtro = e.target.value;
+	let keycode = (e.keyCode ? e.keyCode : e.which);
+
+	if(keycode == '13'){
+        if (!filtro || filtro === ""){
+            carregaProjetos();
+        } else {
+            exibeComunidade();
+            carregaProjetos(filtro);
+        }		
+	}
+});
 
 $("#menu-code-editor").on("click", function () {
+    limpaMenuAtivo();
+
     $(this).addClass("nav-link-active");
     $(this.firstElementChild).addClass("btn-item-menu-active");
 
@@ -50,16 +61,24 @@ $("#menu-code-editor").on("click", function () {
 
 $("#menu-comunidade").on("click", function () {
     limpaCampos();
+    exibeComunidade();
+    carregaProjetos();
+});
 
-    $(this).addClass("nav-link-active");
-    $(this.firstElementChild).addClass("btn-item-menu-active");
+function exibeComunidade() {
+    limpaMenuAtivo();
+    $("#menu-comunidade").addClass("nav-link-active");
+    $($("#menu-comunidade")[0].firstElementChild).addClass("btn-item-menu-active");
 
     $("#col-code-editor").css("display", "none");
     $("#col-formulario").css("display", "none");
     $("#col-comunidade").css("display", "block");
+};
 
-    carregaProjetos();
-});
+function limpaMenuAtivo() {
+    $(".nav-link").removeClass("nav-link-active")
+    $(".nav-link .btn-item-menu").removeClass("btn-item-menu-active")
+};
 
 $("#btn-highligth").on("click", function () {
     if (highlightOn === true) {
@@ -143,7 +162,7 @@ function defaultColunasNavbar () {
 };
 
 $("#btn-salvar").on("click", function () {
-    let usuario = JSON.parse(localStorage.getItem("Usuario"));
+    let usuario = getUsuario();
     let isValid = true;
     let listaDeErros = "<ul class='lista-erros'>";
     let nomeDoProjeto = $("#txt-nome-projeto")[0];
@@ -212,16 +231,15 @@ function newGuid() {
     });
 };
 
-function carregaProjetos() {
-
-    let usuario = JSON.parse(localStorage.getItem("Usuario"));
+function carregaProjetos(filtro) {
+    let usuario = getUsuario();
     let htmlProjetos = "";
     let htmlImgLike = "";
+    let htmlBtnExcluir = "";
     
     $("#col-comunidade").html(htmlProjetos);
 
     let index = 0;
-
     Object.keys(localStorage).forEach((key) => {
 
         if (key === "Usuario") {
@@ -231,6 +249,12 @@ function carregaProjetos() {
         let projeto = JSON.parse(localStorage.getItem(key));
 
         if (!projeto.usuario){
+            return;
+        }
+
+        if (filtro &&
+            (projeto.nome.toLowerCase().indexOf(filtro.toLowerCase()) == -1 &&
+             projeto.descricao.toLowerCase().indexOf(filtro.toLowerCase()) == -1)) {
             return;
         }
 
@@ -247,6 +271,14 @@ function carregaProjetos() {
             htmlImgLike = '<img class="img-like" src="img/icon_like_red.svg">';
         } else {
             htmlImgLike = '<img class="img-like" src="img/icon_like.svg">';
+        }
+
+        if (usuario && usuario.userName === projeto.usuario.userName) {
+            htmlBtnExcluir = '<button class="btn-excluir" onclick="excluiProjeto(\'' + key + '\')">' +
+                                  '<img src="img/icon_delete.svg">'
+                             '</button>';
+        } else {
+            htmlBtnExcluir = "";
         }
         
         htmlProjetos += '<div id="' + key + '" class="cartao"> ' +
@@ -280,12 +312,7 @@ function carregaProjetos() {
                                             '</div>' +
                                         '</div>' +
                                     '</button>' +
-                                    '<button class="btn-excluir" onclick="excluiProjeto(\'' + key + '\')">' +
-                                        '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">' +
-                                            '<path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>' +
-                                            '<path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>' +
-                                        '</svg>' +
-                                    '</button>' +
+                                    htmlBtnExcluir +
                                 '</div>' +
                                 '<div class="col col-lg-7" style="text-align: -webkit-right;">' +
                                     '<button class="btn-usuario">' +
@@ -302,11 +329,20 @@ function carregaProjetos() {
         }
     });
 
-    $("#col-comunidade").html(htmlProjetos);
+    if (!htmlProjetos ||
+        htmlProjetos === "") {
+        Swal.fire({
+            icon: "error",
+            text: "Nenhum projeto encontrado, verifique o filtro ou cadastre um projeto!",
+            confirmButtonColor: "#5081FB"
+        });
+    } else {
+        $("#col-comunidade").html(htmlProjetos);
+    }    
 };
 
 function likeProjeto(idProjeto) {
-    let usuario = JSON.parse(localStorage.getItem("Usuario"));
+    let usuario = getUsuario();
 
     if (!usuario) {
         Swal.fire({
@@ -368,7 +404,7 @@ function limpaCampos() {
 };
 
 $(".nav-link-usuario").on("click", function () {
-    let usuario = JSON.parse(localStorage.getItem("Usuario"));
+    let usuario = getUsuario();
 
     if (usuario) {
         Swal.fire({
@@ -438,3 +474,7 @@ $(".nav-link-usuario").on("click", function () {
         });
     }
 });
+
+function getUsuario () {
+    return JSON.parse(localStorage.getItem("Usuario"));
+};
