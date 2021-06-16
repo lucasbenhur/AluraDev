@@ -329,16 +329,7 @@ function carregaProjetos(filtro) {
         }
     });
 
-    if (!htmlProjetos ||
-        htmlProjetos === "") {
-        Swal.fire({
-            icon: "error",
-            text: "Nenhum projeto encontrado, verifique o filtro ou cadastre um projeto!",
-            confirmButtonColor: "#5081FB"
-        });
-    } else {
-        $("#col-comunidade").html(htmlProjetos);
-    }    
+    $("#col-comunidade").html('<h1 class="font-title">Nenhum projeto encontrado, verifique o filtro ou cadastre um projeto!</h1');
 };
 
 function likeProjeto(idProjeto) {
