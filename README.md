@@ -20,8 +20,8 @@ Basta clonar o repositório e abrir o index.html. Pode também usar o VsCode com
 ## Conteúdos
 
 - [Overview](#overview)
-  - [O Challenge](#the-challenge)
-  - [Screenshot](#screenshot)
+  - [Funcionalidades](#funcionalidades)
+  - [Screenshots](#screenshots)
   - [Links](#links)
 - [Processo](#processo)
   - [Contruido com](#construido-com)
