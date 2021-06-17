@@ -3,7 +3,7 @@ AluraDev um editor de texto online que te permite salvar seu código na aba comu
 
 ## Como rodar o projeto
 
-Basta clonar o repositório e abrir o index.html. Pode também usar o VsCode com a extensão "Live Server".
+Basta clonar o repositório e abrir o index.html no browser (recomendo o Chrome). Pode também usar o VsCode com a extensão "Live Server".
 
 ## Como utilizar
 
