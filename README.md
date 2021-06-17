@@ -70,7 +70,7 @@ Os usuarios serão capazes de:
 ### O que eu aprendi
 
 - Utilizar frameworks como:
-  - [BootStrap](https://getbootstrap.com)
+  - [Bootstrap](https://getbootstrap.com)
 - Utilizar bibliotecas como:
   - [Highlight JS](https://highlightjs.org)
   - [File Saver](https://github.com/eligrey/FileSaver.js)
