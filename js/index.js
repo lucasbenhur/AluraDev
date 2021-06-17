@@ -415,7 +415,6 @@ $(".nav-link-usuario").on("click", function () {
             if (result.isConfirmed) {
                 localStorage.removeItem("Usuario");
                 carregaUsuario();
-                limpaCampos();
                 carregaProjetos();
             }
         });
@@ -464,7 +463,6 @@ $(".nav-link-usuario").on("click", function () {
                 });
 
                 carregaUsuario();
-                limpaCampos();
                 carregaProjetos();
             }
         });
