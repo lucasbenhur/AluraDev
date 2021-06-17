@@ -79,6 +79,7 @@ Os usuarios serão capazes de:
   - [jQuery](https://jquery.com)
 - Desenvolvimento em grupo, ajudando e sendo ajudado no discord.
 - Utilizar o trello para organizar minhas tarefas.
+- Utilizar o figma para ver o design e baixar os ícones/imagens.
 
 ### Continuação do desenvolvimento
 
