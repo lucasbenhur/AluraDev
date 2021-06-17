@@ -69,7 +69,7 @@ Os usuarios serão capazes de:
 
 ### O que eu aprendi
 
-- Utilizar FrameWorks como:
+- Utilizar frameworks como:
   - [BootStrap](https://getbootstrap.com)
 - Utilizar bibliotecas como:
   - [Highlight JS](https://highlightjs.org)
