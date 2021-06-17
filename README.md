@@ -32,7 +32,7 @@ Basta clonar o repositório e abrir o index.html. Pode também usar o VsCode com
 
 ## Overview
 
-### O Challenge
+### Funcionalidades
 
 Os usuarios serão capazes de:
 
@@ -42,9 +42,9 @@ Os usuarios serão capazes de:
 - Salvar o seu projeto na extensão PNG.
 - Verificar seu projeto na aba comunidades.
 - Projetos permanecerem na aba comunidades.
-- Pesquisar por porjetos salvos.
+- Pesquisar por projetos salvos.
 
-### Screenshot
+### Screenshots
 
 ![](./public/print_editor.png)
 ![](./public/print_comunidade.png)
