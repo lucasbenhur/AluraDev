@@ -51,7 +51,7 @@ Os usuarios serão capazes de:
 
 ### Links
 
-- Site hospedado: [AluraDev](https://lucasbenhur.github.io)
+- Site hospedado: [AluraDev](https://lucasbenhur.github.io/aluradev)
 
 ## Processo
 
