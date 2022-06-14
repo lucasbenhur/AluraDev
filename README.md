@@ -66,6 +66,7 @@ Os usuarios serão capazes de:
 - sweetalert2
 - html2canvas
 - FileSaver
+- C# WebApi .NET 6.0
 
 ### O que eu aprendi
 
@@ -77,7 +78,7 @@ Os usuarios serão capazes de:
   - [html2canvas](https://html2canvas.hertzen.com)
   - [sweetalert2](https://sweetalert2.github.io)
   - [jQuery](https://jquery.com)
-- Desenvolvimento em grupo, ajudando e sendo ajudado no discord.
+- Desenvolvimento em grupo, interagindo com a comunidade no discord.
 - Utilizar o trello para organizar minhas tarefas.
 - Utilizar o figma para ver o design e baixar os ícones/imagens.
 
