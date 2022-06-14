@@ -209,7 +209,7 @@ $("#btn-salvar").on("click", function () {
         Swal.showLoading();
 
         $.ajax({
-            url: "http://lucasbenhur.ddns.net:8080/api/Projeto",
+            url: "http://lucasbenhur.ddns.net:5000/api/Projeto",
             type: "POST",
             data: JSON.stringify(projeto),
             dataType: "json",
@@ -251,7 +251,7 @@ function carregaProjetos(filtro) {
 
     let index = 0;
 
-    $.getJSON('http://lucasbenhur.ddns.net:8080/api/Projeto', function(projetos) {
+    $.getJSON('http://lucasbenhur.ddns.net:5000/api/Projeto', function(projetos) {
         projetos.forEach(function(projeto) {
 
             if (!projeto.usuario){
@@ -358,7 +358,7 @@ function likeProjeto(idProjeto) {
     }
 
     let img_like = $("#"+idProjeto + " .img-like");
-    $.getJSON('http://lucasbenhur.ddns.net:8080/api/Projeto/' + idProjeto, function(projeto) {
+    $.getJSON('http://lucasbenhur.ddns.net:5000/api/Projeto/' + idProjeto, function(projeto) {
     
         if (img_like.attr("src") === "img/icon_like.svg") {
             projeto.likes.push(usuario.userName);
@@ -372,7 +372,7 @@ function likeProjeto(idProjeto) {
         }
 
         $.ajax({
-            url: "http://lucasbenhur.ddns.net:8080/api/Projeto/" + idProjeto,
+            url: "http://lucasbenhur.ddns.net:5000/api/Projeto/" + idProjeto,
             type: "PUT",
             data: JSON.stringify(projeto),
             dataType: "json",
@@ -394,7 +394,7 @@ function excluiProjeto(idProjeto) {
     }).then((result) => {
         if (result.isConfirmed) {
             $.ajax({
-                url: 'http://lucasbenhur.ddns.net:8080/api/Projeto/' + idProjeto,
+                url: 'http://lucasbenhur.ddns.net:5000/api/Projeto/' + idProjeto,
                 type: 'DELETE',
                 success: function(result) {
                     Swal.fire({
