@@ -67,6 +67,7 @@ Os usuarios serão capazes de:
 - html2canvas
 - FileSaver
 - C# WebApi .NET 6.0
+- MongoDB
 
 ### O que eu aprendi
 
