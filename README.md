@@ -68,6 +68,7 @@ Os usuarios serão capazes de:
 - FileSaver
 - C# WebApi .NET 6.0
 - MongoDB
+- Docker
 
 ### O que eu aprendi
 
@@ -82,6 +83,10 @@ Os usuarios serão capazes de:
 - Desenvolvimento em grupo, interagindo com a comunidade no discord.
 - Utilizar o trello para organizar minhas tarefas.
 - Utilizar o figma para ver o design e baixar os ícones/imagens.
+- Construir uma WebApi em C# com arquitetura em camadas.
+- Colocar o app WebApi em container com Docker.
+- Criar testes unitários com NUnit.
+- Usar banco NoSQL com MongoDB.
 
 ### Continuação do desenvolvimento
 
