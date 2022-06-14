@@ -191,7 +191,7 @@ $("#btn-salvar").on("click", function () {
 
     listaDeErros += "</ul>"
 
-    if (isValid === true){
+    if (isValid === true) {
         let projeto = {
             "nome": $("#txt-nome-projeto").val(),
             "descricao": $("#txt-descricao-projeto").val(),
@@ -203,17 +203,34 @@ $("#btn-salvar").on("click", function () {
                 "userName": usuario.userName,
                 "avatar": usuario.avatar
             },
-            "comentarios": [{}]
+            "comentarios": []
         }
 
-        localStorage.setItem(newGuid(), JSON.stringify(projeto));
+        Swal.showLoading();
 
-        Swal.fire({
-            icon: 'success',
-            title: 'Sucesso!',
-            text: 'O projeto será exibido na página da comunidade.',
-            confirmButtonColor: '#5081FB'
-        }).then(() => { limpaCampos() });
+        $.ajax({
+            url: "https://localhost:7125/api/Projeto",
+            type: "POST",
+            data: JSON.stringify(projeto),
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            success: function () {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Sucesso!',
+                    text: 'O projeto será exibido na página da comunidade.',
+                    confirmButtonColor: '#5081FB'
+                }).then(() => { limpaCampos() })
+            },
+            error: function () {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Erro!',
+                    text: 'Ocorreu um erro!',
+                    confirmButtonColor: '#5081FB'
+                });
+            }
+        });
     } else {
         Swal.fire({
             icon: 'error',
@@ -224,13 +241,6 @@ $("#btn-salvar").on("click", function () {
     }       
 });
 
-function newGuid() {  
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {  
-        let r = Math.random()*16|0, v = c === 'x' ? r : (r&0x3|0x8);  
-        return v.toString(16);  
-    });
-};
-
 function carregaProjetos(filtro) {
     let usuario = getUsuario();
     let htmlProjetos = "";
@@ -240,101 +250,98 @@ function carregaProjetos(filtro) {
     $("#col-comunidade").html(htmlProjetos);
 
     let index = 0;
-    Object.keys(localStorage).forEach((key) => {
 
-        if (key === "Usuario") {
-            return;
-        }
+    $.getJSON('https://localhost:7125/api/Projeto', function(projetos) {
+        projetos.forEach(function(projeto) {
 
-        let projeto = JSON.parse(localStorage.getItem(key));
+            if (!projeto.usuario){
+                return;
+            }
 
-        if (!projeto.usuario){
-            return;
-        }
+            if (filtro &&
+                (projeto.nome.toLowerCase().indexOf(filtro.toLowerCase()) == -1 &&
+                projeto.descricao.toLowerCase().indexOf(filtro.toLowerCase()) == -1)) {
+                return;
+            }
 
-        if (filtro &&
-            (projeto.nome.toLowerCase().indexOf(filtro.toLowerCase()) == -1 &&
-             projeto.descricao.toLowerCase().indexOf(filtro.toLowerCase()) == -1)) {
-            return;
-        }
+            index++;        
 
-        index++;        
+            if (index % 2 !== 0) {
+                htmlProjetos += '<div class="row">' +
+                                    '<div class="col-left col-lg-6">';
+            } else {
+                htmlProjetos += '<div class="col-right col-lg-6">';
+            }
 
-        if (index % 2 !== 0) {
-            htmlProjetos += '<div class="row">' +
-                                '<div class="col-left col-lg-6">';
-        } else {
-            htmlProjetos += '<div class="col-right col-lg-6">';
-        }
+            if (usuario && projeto.likes.indexOf(usuario.userName) >= 0) {
+                htmlImgLike = '<img class="img-like" src="img/icon_like_red.svg">';
+            } else {
+                htmlImgLike = '<img class="img-like" src="img/icon_like.svg">';
+            }
 
-        if (usuario && projeto.likes.indexOf(usuario.userName) >= 0) {
-            htmlImgLike = '<img class="img-like" src="img/icon_like_red.svg">';
-        } else {
-            htmlImgLike = '<img class="img-like" src="img/icon_like.svg">';
-        }
-
-        if (usuario && usuario.userName === projeto.usuario.userName) {
-            htmlBtnExcluir = '<button class="btn-excluir" onclick="excluiProjeto(\'' + key + '\')">' +
-                                  '<img src="img/icon_delete.svg">'
-                             '</button>';
-        } else {
-            htmlBtnExcluir = "";
-        }
-        
-        htmlProjetos += '<div id="' + key + '" class="cartao"> ' +
-                            '<div class="bg-code-editor" style="background: ' + projeto.cor +';">' +
-                                '<div class="btn-mac">' +
-                                    '<img class="img-mac" src="img/mac_buttons.svg">' +
+            if (usuario && usuario.userName === projeto.usuario.userName) {
+                htmlBtnExcluir = '<button class="btn-excluir" onclick="excluiProjeto(\'' + projeto.id + '\')">' +
+                                    '<img src="img/icon_delete.svg">'
+                                '</button>';
+            } else {
+                htmlBtnExcluir = "";
+            }
+            
+            htmlProjetos += '<div id="' + projeto.id + '" class="cartao"> ' +
+                                '<div class="bg-code-editor" style="background: ' + projeto.cor +';">' +
+                                    '<div class="btn-mac">' +
+                                        '<img class="img-mac" src="img/mac_buttons.svg">' +
+                                    '</div>' +
+                                    '<div class="div-code-editor">' +
+                                        '<code class="code-editor" contenteditable="false" spellcheck="false">' +
+                                            hljs.highlight(projeto.codigo, {language: projeto.linguagem}).value +
+                                        '</code>' +
+                                    '</div>' +
                                 '</div>' +
-                                '<div class="div-code-editor">' +
-                                    '<code class="code-editor" contenteditable="false" spellcheck="false">' +
-                                        hljs.highlight(projeto.codigo, {language: projeto.linguagem}).value +
-                                    '</code>' +
+                                '<div class="titulo font-title">' +
+                                    projeto.nome +
                                 '</div>' +
-                            '</div>' +
-                            '<div class="titulo font-title">' +
-                                projeto.nome +
-                            '</div>' +
-                            '<div class="descricao font-body">' +
-                                projeto.descricao +
-                            '</div>' +
-                            '<div class="row actions">' +
-                                '<div class="col col-lg-5" style="display: flex;">' +
-                                    '<button class="btn-comentario">' +
-                                        '<img class="img-comentario" src="img/icon_comentario.svg">' +
-                                        0 +
-                                    '</button>' +
-                                    '<button class="btn-like" onclick="likeProjeto(\'' + key + '\')">' +
-                                        '<div style="display: flex;">' +
-                                            htmlImgLike +
-                                            '<div id="numero-likes">' +
-                                                projeto.likes.length +
+                                '<div class="descricao font-body">' +
+                                    projeto.descricao +
+                                '</div>' +
+                                '<div class="row actions">' +
+                                    '<div class="col col-lg-5" style="display: flex;">' +
+                                        '<button class="btn-comentario">' +
+                                            '<img class="img-comentario" src="img/icon_comentario.svg">' +
+                                            0 +
+                                        '</button>' +
+                                        '<button class="btn-like" onclick="likeProjeto(\'' + projeto.id + '\')">' +
+                                            '<div style="display: flex;">' +
+                                                htmlImgLike +
+                                                '<div id="numero-likes">' +
+                                                    projeto.likes.length +
+                                                '</div>' +
                                             '</div>' +
-                                        '</div>' +
-                                    '</button>' +
-                                    htmlBtnExcluir +
-                                '</div>' +
-                                '<div class="col col-lg-7" style="text-align: -webkit-right;">' +
-                                    '<button class="btn-usuario">' +
-                                        '<img src=' + projeto.usuario.avatar +' class="rounded-circle img-usuario" width="32px" height="32px">' +
-                                        '@' + projeto.usuario.userName +
-                                    '</button>' +
+                                        '</button>' +
+                                        htmlBtnExcluir +
+                                    '</div>' +
+                                    '<div class="col col-lg-7" style="text-align: -webkit-right;">' +
+                                        '<button class="btn-usuario">' +
+                                            '<img src=' + projeto.usuario.avatar +' class="rounded-circle img-usuario" width="32px" height="32px">' +
+                                            '@' + projeto.usuario.userName +
+                                        '</button>' +
+                                    '</div>' +
                                 '</div>' +
                             '</div>' +
-                        '</div>' +
-                    '</div>'
+                        '</div>'
 
-        if (index % 2 === 0) {
-            htmlProjetos += '</div>';
-        }
-    });
-
-    if (!htmlProjetos ||
-        htmlProjetos === "") {
-        $("#col-comunidade").html('<h1 class="font-title" style="margin-left: -12px;">Nenhum projeto encontrado, verifique o filtro ou cadastre um projeto!</h1');
-    } else {
-        $("#col-comunidade").html(htmlProjetos);
-    }    
+            if (index % 2 === 0) {
+                htmlProjetos += '</div>';
+            }
+        });
+    }).done(function (){
+        if (!htmlProjetos ||
+            htmlProjetos === "") {
+            $("#col-comunidade").html('<h1 class="font-title" style="margin-left: -12px;">Nenhum projeto encontrado, verifique o filtro ou cadastre um projeto!</h1');
+        } else {
+            $("#col-comunidade").html(htmlProjetos);
+        } 
+    });       
 };
 
 function likeProjeto(idProjeto) {
@@ -351,20 +358,27 @@ function likeProjeto(idProjeto) {
     }
 
     let img_like = $("#"+idProjeto + " .img-like");
-    let projeto = JSON.parse(localStorage.getItem(idProjeto));
+    $.getJSON('https://localhost:7125/api/Projeto/' + idProjeto, function(projeto) {
     
-    if (img_like.attr("src") === "img/icon_like.svg") {
-        projeto.likes.push(usuario.userName);
-        $("#"+idProjeto + " #numero-likes").html(projeto.likes.length);
-        img_like.attr("src", "img/icon_like_red.svg");
-    } else {
-        let pos =  projeto.likes.indexOf(usuario.userName);
-        projeto.likes.splice(pos, 1);
-        $("#"+idProjeto + " #numero-likes").html(projeto.likes.length);
-        img_like.attr("src", "img/icon_like.svg");
-    }    
-    
-    localStorage.setItem(idProjeto, JSON.stringify(projeto));
+        if (img_like.attr("src") === "img/icon_like.svg") {
+            projeto.likes.push(usuario.userName);
+            $("#"+idProjeto + " #numero-likes").html(projeto.likes.length);
+            img_like.attr("src", "img/icon_like_red.svg");
+        } else {
+            let pos =  projeto.likes.indexOf(usuario.userName);
+            projeto.likes.splice(pos, 1);
+            $("#"+idProjeto + " #numero-likes").html(projeto.likes.length);
+            img_like.attr("src", "img/icon_like.svg");
+        }
+
+        $.ajax({
+            url: "https://localhost:7125/api/Projeto/" + idProjeto,
+            type: "PUT",
+            data: JSON.stringify(projeto),
+            dataType: "json",
+            contentType: "application/json; charset=utf-8"
+        });    
+    }); 
 };
 
 function excluiProjeto(idProjeto) {
@@ -379,13 +393,18 @@ function excluiProjeto(idProjeto) {
         cancelButtonText: 'Cancelar'
     }).then((result) => {
         if (result.isConfirmed) {
-            localStorage.removeItem(idProjeto);
-            Swal.fire({
-                title: 'Excluído!',
-                text: 'O projeto foi excluído.',
-                icon: 'success',
-                confirmButtonColor: '#5081FB'
-            }).then(() => {carregaProjetos();});
+            $.ajax({
+                url: 'https://localhost:7125/api/Projeto/' + idProjeto,
+                type: 'DELETE',
+                success: function(result) {
+                    Swal.fire({
+                        title: 'Excluído!',
+                        text: 'O projeto foi excluído.',
+                        icon: 'success',
+                        confirmButtonColor: '#5081FB'
+                    }).then(() => {carregaProjetos();});
+                }
+            });            
         }
     });
 };
